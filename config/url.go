@@ -356,9 +356,9 @@ func importFromVmess(vmessURL string) (*SimpleConfig, error) {
 	vmessURL = strings.TrimPrefix(vmessURL, "vmess://")
 
 	// Base64解码
-	jsonData, err := base64.StdEncoding.DecodeString(vmessURL)
+	_, err := base64.StdEncoding.DecodeString(vmessURL)
 	if err != nil {
-		jsonData, err = base64.URLEncoding.DecodeString(vmessURL)
+		_, err = base64.URLEncoding.DecodeString(vmessURL)
 		if err != nil {
 			return nil, fmt.Errorf("failed to decode vmess: %w", err)
 		}

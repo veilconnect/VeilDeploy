@@ -159,108 +159,33 @@ func SaveSimpleConfig(config *SimpleConfig, path string) error {
 
 // ToFullConfig 转换为完整配置
 func (sc *SimpleConfig) ToFullConfig() (*Config, error) {
+	// 使用现有的 Config 结构体
 	config := &Config{
-		Mode:     sc.Mode,
-		Server:   sc.Server,
-		Password: sc.Password,
+		Mode: sc.Mode,
+		PSK:  sc.Password,
 	}
 
-	if sc.Advanced != nil {
-		// 混淆
-		if sc.Advanced.Obfuscation != "none" {
-			config.Obfuscation = &ObfuscationConfig{
-				Enabled: true,
-				Mode:    sc.Advanced.Obfuscation,
-			}
+	// 解析 Server 地址
+	if sc.Server != "" {
+		if sc.Mode == "server" {
+			config.Listen = sc.Server
+		} else {
+			config.Endpoint = sc.Server
 		}
+	}
 
-		// 端口跳跃
-		if sc.Advanced.PortHopping {
-			config.PortHopping = &PortHoppingConfig{
-				Enabled:     true,
-				PortRange:   "10000-60000",
-				HopInterval: 60 * time.Second,
-			}
-		}
+	// 设置默认值
+	config.Keepalive = Duration{25 * time.Second}
+	config.MaxPadding = 255
 
-		// 回落
-		if sc.Advanced.Fallback {
-			config.Fallback = &FallbackConfig{
-				Enabled:      true,
-				FallbackAddr: sc.Advanced.FallbackAddr,
-			}
-		}
-
-		// 密码套件
-		config.Cipher = sc.Advanced.Cipher
-
-		// PFS
-		if sc.Advanced.PFS {
-			config.PFS = &PFSConfig{
-				Enabled:       true,
-				RekeyInterval: 5 * time.Minute,
-			}
-		}
-
-		// 0-RTT
-		if sc.Advanced.ZeroRTT {
-			config.ZeroRTT = &ZeroRTTConfig{
-				Enabled: true,
-			}
-		}
-
-		// 网络参数
-		config.MTU = sc.Advanced.MTU
-		if keepalive, err := time.ParseDuration(sc.Advanced.KeepAlive); err == nil {
-			config.KeepAlive = keepalive
-		}
+	// 网络参数
+	if sc.Advanced != nil && sc.Advanced.MTU > 0 {
+		config.Tunnel.MTU = sc.Advanced.MTU
+	} else {
+		config.Tunnel.MTU = 1420
 	}
 
 	return config, nil
-}
-
-// Config 完整配置结构（兼容现有代码）
-type Config struct {
-	Mode     string
-	Server   string
-	Password string
-
-	// 高级功能
-	Obfuscation *ObfuscationConfig
-	PortHopping *PortHoppingConfig
-	Fallback    *FallbackConfig
-	PFS         *PFSConfig
-	ZeroRTT     *ZeroRTTConfig
-
-	// 基础参数
-	Cipher    string
-	MTU       int
-	KeepAlive time.Duration
-}
-
-type ObfuscationConfig struct {
-	Enabled bool
-	Mode    string
-}
-
-type PortHoppingConfig struct {
-	Enabled     bool
-	PortRange   string
-	HopInterval time.Duration
-}
-
-type FallbackConfig struct {
-	Enabled      bool
-	FallbackAddr string
-}
-
-type PFSConfig struct {
-	Enabled       bool
-	RekeyInterval time.Duration
-}
-
-type ZeroRTTConfig struct {
-	Enabled bool
 }
 
 // GenerateMinimalConfig 生成最小配置示例
