@@ -1,0 +1,33 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(go build:*)",
+      "Bash(go test:*)",
+      "Bash(./veildeploy.exe:*)",
+      "Bash(curl -s http://127.0.0.1:7777/metrics)",
+      "Bash(./veildeploy-gui.exe)",
+      "Read(//d/web/**)",
+      "Bash(curl -s http://127.0.0.1:7777/state)",
+      "Bash(python:*)",
+      "Bash(curl -s http://127.0.0.1:7778/state)",
+      "Bash(go get:*)",
+      "Bash(go mod:*)",
+      "Bash(gcc:*)",
+      "Bash(./veildeploy-desktop.exe)",
+      "Bash(choco:*)",
+      "Bash(where gcc)",
+      "Bash(tasklist)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(dir:*)",
+      "Bash(go run:*)",
+      "Bash(timeout 15 go test -v ./crypto -run \"TestPFS|TestObfuscation|TestNegotiation|TestAntiReplay\")",
+      "Bash(git --version)",
+      "Bash(git config:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

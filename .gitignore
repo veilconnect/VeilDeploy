@@ -1,0 +1,51 @@
+# 编译输出
+*.exe
+*.dll
+*.so
+*.dylib
+veildeploy
+veildeploy-*
+!scripts/*.sh
+
+# 测试和覆盖率
+*.test
+*.out
+coverage.txt
+*.prof
+
+# IDE 配置
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# 操作系统文件
+.DS_Store
+Thumbs.db
+
+# 依赖目录
+vendor/
+
+# 临时文件
+*.log
+*.tmp
+tmp/
+
+# 配置文件（包含敏感信息）
+config.yaml
+*.key
+*.pem
+*.crt
+
+# 数据库文件
+*.db
+*.sqlite
+
+# 备份文件
+*.backup
+*.bak
+
+# Release 目录
+release/
+nul

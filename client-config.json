@@ -1,0 +1,24 @@
+{
+  "mode": "client",
+  "endpoint": "127.0.0.1:51820",
+  "psk": "my-secure-test-psk-for-demo-purposes-2025",
+  "keepalive": "15s",
+  "maxPadding": 96,
+  "peers": [
+    {
+      "name": "server",
+      "allowedIPs": ["10.0.0.0/24"]
+    }
+  ],
+  "tunnel": {
+    "type": "loopback"
+  },
+  "management": {
+    "bind": "127.0.0.1:7778",
+    "acl": ["127.0.0.0/8"]
+  },
+  "logging": {
+    "level": "info",
+    "output": "stdout"
+  }
+}

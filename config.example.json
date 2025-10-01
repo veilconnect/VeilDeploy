@@ -1,0 +1,33 @@
+{
+  "mode": "server",
+  "listen": "0.0.0.0:51820",
+  "psk": "CHANGE-THIS-TO-A-SECURE-RANDOM-32-CHAR-PSK-VALUE",
+  "keepalive": "15s",
+  "maxPadding": 96,
+  "rekeyInterval": "30m",
+  "rekeyBudget": 16000,
+  "maxConnections": 1000,
+  "connectionRate": 100,
+  "connectionBurst": 10,
+  "management": {
+    "bind": "127.0.0.1:7777"
+  },
+  "logging": {
+    "level": "info",
+    "output": "stdout"
+  },
+  "tunnel": {
+    "listen": "127.0.0.1:7000",
+    "type": "loopback"
+  },
+  "peers": [
+    {
+      "name": "internal-net",
+      "endpoint": "",
+      "allowedIPs": [
+        "10.10.0.0/16",
+        "fd00::/64"
+      ]
+    }
+  ]
+}

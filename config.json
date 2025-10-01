@@ -1,0 +1,1 @@
+{"mode":"server","psk":"my-secure-test-psk-for-demo-purposes-2025","keepalive":"15s","management":{"bind":"127.0.0.1:7777"},"logging":{"level":"info","output":"stdout"},"listen":"127.0.0.1:51820","peers":[{"name":"client1","allowedIPs":["10.0.0.0/24"]}],"tunnel":{"type":"loopback"}}
